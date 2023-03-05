@@ -746,3 +746,9 @@ if ((bool)$sysconf['load_balanced_env']) ip()->setSourceRemoteIp($sysconf['load_
 
 // load all Plugins
 \SLiMS\Plugins::getInstance()->loadPlugins();
+
+// Sanitize incoming data
+\SLiMS\Sanitizer::fromGlobal(config('custom_sanitizer_options', [
+  'get' => $_GET,
+  'server' => $_SERVER
+]))->cleanUp();
