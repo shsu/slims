@@ -30,6 +30,7 @@ class Sanitizer
     {
         foreach ($this->variableToClean as $type => $globalVariable) {
             foreach ($globalVariable as $key => $value) {
+                if (is_array($value)) continue;
                 $newValue = utility::filterData($key, $type, true, true, true);
 
                 switch ($type) {
