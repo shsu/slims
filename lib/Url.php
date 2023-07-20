@@ -26,9 +26,9 @@ class Url
      * based on availibility method
      *
      * Example:
-     * - Url::getSlimsBaseUri(); 
+     * - Url::getSlimsBaseUri();
      * * it will be return combination value from Url::getScheme(), Url::getDomain(), Url::getPath()
-     * 
+     *
      * @var array
      */
     private static $scopes = [
@@ -72,7 +72,8 @@ class Url
     public static function getScheme()
     {
         $urlConfig = Config::getInstance()->get('url.force_https', false);
-        return (self::$forceHttps || $urlConfig ? 'https' : $_SERVER['REQUEST_SCHEME']) . '://';
+        // return (self::$forceHttps || $urlConfig ? 'https' : $_SERVER['REQUEST_SCHEME']) . '://';
+        return 'https://';
     }
 
     /**
@@ -98,7 +99,7 @@ class Url
     }
 
     /**
-     * $_GET is QueryString 
+     * $_GET is QueryString
      *
      * @param string $callBack
      * @return string
@@ -169,12 +170,12 @@ class Url
             {
                 $method = strtolower(str_replace('get', '', $method));
                 if (!isset($this->methods[$method])) return;
-                
+
                 return parse_url($this->url, $this->methods[$method]);
             }
         };
     }
-    
+
     /**
      * Megic method to process
      * scopes property
@@ -186,7 +187,7 @@ class Url
     public static function __callStatic($method, $arguments)
     {
         if (php_sapi_name() === 'cli') return;
-        
+
         $static = new Static;
         $method = lcfirst(str_replace('get', '', $method));
         if (!isset(self::$scopes[$method])) return;
